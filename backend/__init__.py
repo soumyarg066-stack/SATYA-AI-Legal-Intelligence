@@ -14,6 +14,7 @@ from sqlalchemy.exc import OperationalError, SQLAlchemyError
 
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
+
 from backend.config import ConfigError, build_engine_options, load_config, redact_database_uri
 from backend.extensions import csrf, db, login_manager, migrate
 from backend.services.language_service import get_language_messages, resolve_request_language
@@ -136,10 +137,14 @@ def create_app(test_config=None):
         return render_template_error(message, 503)
 
     @app.errorhandler(SQLAlchemyError)
-    def database_error(_error):
+    def database_error(error):
         g._handling_db_error = True
         db.session.rollback()
-        current_app.logger.error("A database operation failed.")
+        current_app.logger.error(
+            "A database operation failed: %s",
+            error,
+            exc_info=True
+    )
         message = "A database error occurred while processing your request."
         if request.path.startswith("/api/"):
             msgs = get_language_messages(resolve_request_language(request))
