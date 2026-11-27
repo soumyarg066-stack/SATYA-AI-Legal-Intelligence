@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block title %}Ask Satya — SATYA{% endblock %}
+{% block body_class %}chat-app{% endblock %}
+{% block content %}
+<section class="research-app">
+  <aside class="research-sidebar" id="researchSidebar">
+    <a class="research-brand" href="{{ url_for('pages.home') }}"><span class="research-brand-mark">S</span><span>SATYA<small>LEGAL INTELLIGENCE</small></span></a>
+    <button class="research-new-chat" id="newConversation" type="button"><i class="bi bi-plus-lg"></i> New conversation <kbd>⌘ K</kbd></button>
+    <div class="sidebar-section">
+      <div class="sidebar-section-heading"><span>WORKSPACE</span></div>
+      <a class="sidebar-link active" href="{{ url_for('pages.chatbot') }}"><i class="bi bi-chat-square-text"></i> Ask Satya</a>
+      <a class="sidebar-link" href="{{ url_for('pages.dashboard') }}"><i class="bi bi-grid"></i> Overview</a>
+      <a class="sidebar-link" href="{{ url_for('pages.knowledge_base') }}"><i class="bi bi-journal-bookmark"></i> Knowledge base</a>
+      <a class="sidebar-link" href="{{ url_for('pages.documents') }}"><i class="bi bi-folder2-open"></i> Source documents</a>
+    </div>
+    <div class="sidebar-section history-section">
+      <div class="sidebar-section-heading"><span>RECENT CONVERSATIONS</span><i class="bi bi-clock-history"></i></div>
+      <div id="conversationList" class="conversation-list"></div>
+    </div>
+    <div class="sidebar-section domain-nav-section">
+      <div class="sidebar-section-heading"><span>LEGAL DOMAINS</span></div>
+      <a class="domain-nav-link" href="{{ url_for('pages.knowledge_base') }}"><span class="domain-nav-dot dot-criminal"></span>Criminal Law</a>
+      <a class="domain-nav-link" href="{{ url_for('pages.knowledge_base') }}"><span class="domain-nav-dot dot-consumer"></span>Consumer Protection</a>
+      <a class="domain-nav-link" href="{{ url_for('pages.knowledge_base') }}"><span class="domain-nav-dot dot-rti"></span>Right to Information</a>
+      <a class="domain-nav-link" href="{{ url_for('pages.knowledge_base') }}"><span class="domain-nav-dot dot-aid"></span>Legal Aid</a>
+      <a class="domain-nav-link" href="{{ url_for('pages.knowledge_base') }}"><span class="domain-nav-dot dot-privacy"></span>Digital Privacy</a>
+    </div>
+    <div class="sidebar-account">
+      <span class="sidebar-avatar">{{ current_user.username[:1]|upper }}</span>
+      <span class="sidebar-user"><b>{{ current_user.username }}</b><small>{{ current_user.email }}</small></span>
+      <a href="{{ url_for('pages.profile') }}" aria-label="Open profile"><i class="bi bi-gear"></i></a>
+    </div>
+  </aside>
+
+  <div class="research-main">
+    <header class="research-topbar">
+      <button class="icon-button mobile-sidebar-toggle" id="toggleSidebar" type="button" aria-label="Toggle conversation sidebar" aria-expanded="false"><i class="bi bi-layout-sidebar"></i></button>
+      <div class="research-breadcrumb"><span>Workspace</span><i class="bi bi-chevron-right"></i><b>Ask Satya</b></div>
+      <div class="research-top-actions">
+        <span class="knowledge-status" id="knowledgeStatus" data-available="{{ 'true' if knowledge_status.available else 'false' }}">
+          <span></span>
+          {% if knowledge_status.available %}
+          Knowledge base ready · {{ knowledge_status.verified_sources }} verified source{% if knowledge_status.verified_sources != 1 %}s{% endif %}
+          {% else %}
+          Knowledge base unavailable
+          {% endif %}
+        </span>
+        <div class="language-picker" title="Select response language">
+          <label for="chatLanguage" class="visually-hidden">Response language</label>
+          <i class="bi bi-translate" aria-hidden="true"></i>
+          <select id="chatLanguage" class="language-select" aria-label="Response language">
+            <option value="en">English</option>
+            <option value="kn">ಕನ್ನಡ (Kannada)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+          </select>
+        </div>
+        <button class="icon-button mobile-evidence-toggle" id="toggleEvidence" type="button" aria-label="Show source evidence"><i class="bi bi-journal-text"></i></button>
+        <button class="clear-chat-button" id="clearConversation" type="button" disabled><i class="bi bi-trash3"></i><span>Clear chat</span></button>
+      </div>
+    </header>
+
+    <div class="research-content">
+      <div class="chat-column">
+        <div class="chat-messages" id="chatMessages" aria-live="polite">
+          <div class="chat-welcome" id="chatWelcome">
+            <div class="welcome-symbol"><span class="welcome-symbol-inner"><i class="bi bi-stars"></i></span><span class="welcome-ring"></span></div>
+            <div class="welcome-eyebrow">EXECUTIVE RESEARCH COMPANION</div>
+            <h1>Clarity begins<br>with <em>good questions.</em></h1>
+            <p>Explore Indian law and policy with an assistant engineered to put verified evidence first and surface uncertainty transparently.</p>
+            <div class="welcome-state"><i class="bi bi-info-circle"></i><span>
+              {% if knowledge_status.available %}
+              <b>{{ knowledge_status.verified_sources }} verified source document{% if knowledge_status.verified_sources != 1 %}s{% endif %} available.</b> Answers are grounded only in retrieved source passages.
+              {% else %}
+              <b>No verified legal documents are available yet.</b> An administrator must review and verify extracted sources before Satya can answer.
+              {% endif %}
+            </span></div>
+            <div class="suggestion-grid">
+              <button type="button" class="suggestion-card" data-prompt="How does Satya use legal sources?">
+                <i class="bi bi-journal-check"></i>
+                <span><b>How does Satya work?</b><small>Learn about evidence and citations</small></span>
+                <i class="bi bi-arrow-up-right"></i>
+              </button>
+              <button type="button" class="suggestion-card" data-prompt="What legal topics can I explore?">
+                <i class="bi bi-compass"></i>
+                <span><b>Explore legal topics</b><small>See available knowledge domains</small></span>
+                <i class="bi bi-arrow-up-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="composer-area">
+          <form id="chatForm" class="composer-form">
+            <label for="chatInput" class="visually-hidden">Ask a legal question</label>
+            <textarea id="chatInput" class="chat-input" rows="1" maxlength="4000" placeholder="Ask a question about Indian law or policy..." required></textarea>
+            <div class="composer-tools">
+              <span><i class="bi bi-shield-check"></i> Evidence-first responses</span>
+              <button type="submit" class="send-button" id="sendButton" aria-label="Send message"><i class="bi bi-arrow-up"></i></button>
+            </div>
+          </form>
+          <div class="composer-disclaimer">SATYA can make mistakes. Check the original source.{% if not knowledge_status.available %} No verified legal documents are available yet.{% endif %}</div>
+        </div>
+      </div>
+
+      <aside class="evidence-sidebar" id="evidencePanel">
+        <div class="evidence-header">
+          <div>
+            <span class="evidence-header-icon"><i class="bi bi-journal-text"></i></span>
+            <span><b>Evidence panel</b><small>Source provenance for this response</small></span>
+          </div>
+          <button class="icon-button evidence-close" id="closeEvidence" type="button" aria-label="Close evidence panel"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="evidence-content" id="evidenceContent">
+          <div class="evidence-empty">
+            <span class="evidence-empty-icon"><i class="bi bi-file-earmark-x"></i></span>
+            <span class="insufficient-badge"><i class="bi bi-exclamation-circle"></i> INSUFFICIENT EVIDENCE</span>
+            <h2>Nothing to cite yet.</h2>
+            <p>There are no verified source documents in the library. Satya will not fabricate legal sections, citations or quotations.</p>
+            <div class="evidence-fields">
+              <div><span>Source document</span><b>Not available</b></div>
+              <div><span>Act or Rule</span><b>Not available</b></div>
+              <div><span>Section / paragraph</span><b>Not available</b></div>
+              <div><span>Page</span><b>Not available</b></div>
+            </div>
+            <a href="{{ url_for('pages.documents') }}">View source library <i class="bi bi-arrow-up-right"></i></a>
+          </div>
+        </div>
+        <div class="evidence-footer"><i class="bi bi-shield-lock"></i> Answers use only retrieved verified source passages.</div>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/chat.js', v='9') }}" defer></script>{% endblock %}

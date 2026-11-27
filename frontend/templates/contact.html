@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Contact SATYA{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <nav class="editorial-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ url_for('pages.home') }}">Home</a>
+      <i class="bi bi-chevron-right"></i>
+      <span>Contact</span>
+    </nav>
+    <div class="editorial-badge"><i class="bi bi-envelope"></i> GET IN TOUCH</div>
+    <h1>We'd like to hear<br><span class="text-gold">from you.</span></h1>
+    <p>Share feedback, ask about SATYA's architecture, or reach out to our research team.</p>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-5">
+        <div class="section-kicker">START A CONVERSATION</div>
+        <h2 class="content-title">Thoughtful questions make us better.</h2>
+        <p class="body-copy">Use the form to send a message. Submissions are stored securely in the application database so the team can review and respond.</p>
+        <div class="contact-assurance">
+          <i class="bi bi-shield-lock"></i>
+          <span>Your message is handled privately and is never published.</span>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="panel-card contact-card">
+          <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="mb-3">
+              <label class="form-label" for="name">Name</label>
+              <input class="form-control" id="name" name="name" required minlength="2" maxlength="100" value="{{ request.form.get('name', '') }}">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="email">Email address</label>
+              <input class="form-control" id="email" name="email" type="email" required maxlength="254" value="{{ request.form.get('email', '') }}">
+            </div>
+            <div class="mb-4">
+              <label class="form-label" for="message">How can we help?</label>
+              <textarea class="form-control" id="message" name="message" rows="5" required minlength="10" maxlength="5000">{{ request.form.get('message', '') }}</textarea>
+            </div>
+            <button class="btn btn-navy" type="submit">Send message <i class="bi bi-arrow-right ms-2"></i></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

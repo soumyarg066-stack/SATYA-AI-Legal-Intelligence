@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Admin console — SATYA{% endblock %}
+{% block content %}
+<section class="workspace-hero">
+  <div class="container workspace-hero-inner">
+    <div>
+      <div class="section-label section-label-light"><span>PLATFORM CONTROL</span> / ADMIN</div>
+      <h1>Admin <em>console.</em></h1>
+      <p>Operational overview grounded in live MySQL application records.</p>
+    </div>
+    <a href="{{ url_for('pages.documents') }}" class="button button-gold"><i class="bi bi-upload"></i> Manage documents</a>
+  </div>
+</section>
+
+<section class="admin-page">
+  <div class="container admin-container">
+    <div class="admin-connection">
+      <span class="connection-indicator" id="connectionIndicator"></span>
+      <span id="connectionLabel">Checking system connection...</span>
+      <span class="admin-connection-user">Administrator · {{ current_user.email }}</span>
+    </div>
+
+    <div class="admin-stat-grid" id="adminStats">
+      <article class="admin-stat"><span class="admin-stat-icon"><i class="bi bi-people"></i></span><div><small>REGISTERED USERS</small><strong id="userTotal">—</strong><span>Current account records</span></div></article>
+      <article class="admin-stat"><span class="admin-stat-icon"><i class="bi bi-folder2-open"></i></span><div><small>UPLOADED DOCUMENTS</small><strong id="documentTotal">—</strong><span>Files stored in the library</span></div></article>
+      <article class="admin-stat"><span class="admin-stat-icon"><i class="bi bi-arrow-repeat"></i></span><div><small>PROCESSING JOBS</small><strong id="processingTotal">—</strong><span id="processingNote">Checking pipeline status</span></div></article>
+    </div>
+
+    <div class="admin-grid">
+      <section class="admin-panel">
+        <div class="admin-panel-heading"><div><span class="section-label"><span>ACCOUNT DIRECTORY</span></span><h2>Users</h2></div><span class="live-record-tag"><i class="bi bi-database-check"></i> Live records</span></div>
+        <div class="admin-search"><i class="bi bi-search"></i><label class="visually-hidden" for="userSearch">Search users</label><input id="userSearch" type="search" placeholder="Search name or email..."></div>
+        <div id="adminUsers" class="admin-list"><div class="table-loading">Loading current records...</div></div>
+        <div class="admin-panel-foot"><i class="bi bi-info-circle"></i> Account roles are managed through the administrator command line.</div>
+      </section>
+
+      <section class="admin-panel">
+        <div class="admin-panel-heading"><div><span class="section-label"><span>DOCUMENT PIPELINE</span></span><h2>Processing status</h2></div><i class="bi bi-activity admin-panel-mark"></i></div>
+        <div id="adminStatuses" class="status-list"><div class="table-loading">Loading current records...</div></div>
+        <div class="system-checks">
+          <div><span class="check-indicator" id="databaseIndicator"></span><span>Application API &amp; MySQL</span><b id="databaseStatus">Checking</b></div>
+          <div><span class="check-indicator connection-on" id="extractionIndicator"></span><span>Document extraction</span><b id="extractionStatus">Enabled</b></div>
+          <div><span class="check-indicator connection-on" id="monitoringIndicator"></span><span>Error monitoring</span><b id="monitoringStatus">Configured</b></div>
+        </div>
+        <div class="admin-honesty"><i class="bi bi-shield-exclamation"></i> Extracted passages require administrator verification before appearing in Ask Satya.</div>
+      </section>
+    </div>
+
+    <section class="admin-panel recent-documents-panel">
+      <div class="admin-panel-heading"><div><span class="section-label"><span>SOURCE LIBRARY</span></span><h2>Recent documents</h2></div><a class="admin-panel-link" href="{{ url_for('pages.documents') }}">Open document manager <i class="bi bi-arrow-up-right"></i></a></div>
+      <div class="table-responsive">
+        <table class="table admin-table align-middle mb-0">
+          <thead><tr><th>FILE</th><th>TYPE</th><th>UPLOADED</th><th>STATUS</th></tr></thead>
+          <tbody id="adminDocuments"><tr><td colspan="4"><div class="table-loading">Loading current records...</div></td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/admin.js', v='4') }}" defer></script>{% endblock %}

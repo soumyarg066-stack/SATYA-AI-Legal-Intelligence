@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Sign in — SATYA{% endblock %}
+{% block content %}
+<section class="auth-section">
+  <div class="container">
+    <div class="auth-layout">
+      <div class="auth-story">
+        <a class="auth-brand" href="{{ url_for('pages.home') }}"><span class="brand-mark">S</span><span>SATYA<small>TRUTH IN EVERY LEGAL ANSWER</small></span></a>
+        <div class="section-label section-label-light"><span>WELCOME BACK</span></div>
+        <h1>Better questions.<br><em>Grounded answers.</em></h1>
+        <p>Return to your executive research workspace for a verifiable, source-led way to explore Indian law and policy.</p>
+        <div class="auth-story-note"><i class="bi bi-shield-check"></i><span>Engineered to put verified statutory evidence before confident-sounding guesses.</span></div>
+      </div>
+      <div class="auth-card">
+        <div class="auth-emblem"><i class="bi bi-shield-lock"></i></div>
+        <div class="section-kicker">SIGN IN</div>
+        <h2>Welcome to Satya</h2>
+        <p class="auth-subtitle">Sign in to continue to your workspace.</p>
+        <form method="post" novalidate>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <div class="mb-3"><label class="form-label" for="email">Email address</label><input class="form-control" id="email" name="email" type="email" autocomplete="email" required maxlength="254" value="{{ request.form.get('email', '') }}"></div>
+          <div class="mb-3"><label class="form-label" for="password">Password</label><input class="form-control" id="password" name="password" type="password" autocomplete="current-password" required></div>
+          <div class="form-check mb-4"><input class="form-check-input" id="remember" name="remember" type="checkbox"><label class="form-check-label" for="remember">Keep me signed in</label></div>
+          <button class="btn btn-navy w-100 btn-lg" type="submit">Sign in <i class="bi bi-arrow-right ms-2"></i></button>
+        </form>
+        <p class="auth-switch">New to Satya? <a href="{{ url_for('pages.register') }}">Create an account</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

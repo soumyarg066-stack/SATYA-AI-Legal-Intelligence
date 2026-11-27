@@ -1,0 +1,360 @@
+{% extends "base.html" %}
+{% block title %}SATYA — AI That Never Makes Things Up About Indian Law &amp; Policy{% endblock %}
+{% block content %}
+<section class="home-hero satya-cinematic-hero" id="top">
+  <!-- Layer 1: Dark Indian Courtroom Backdrop -->
+  <div class="hero-courtroom-layer" aria-hidden="true">
+    <img src="{{ url_for('static', filename='images/courtroom-bg.jpg') }}" alt="" class="hero-courtroom-img">
+    <div class="hero-courtroom-vignette"></div>
+    <div class="hero-circuit-grid"></div>
+  </div>
+
+  <!-- Layer 2: Ambient evidence light and trace markers -->
+  <div class="hero-ambient-layer" aria-hidden="true">
+    <span class="hero-halo hero-halo-gold"></span>
+    <span class="hero-halo hero-halo-blue"></span>
+    <span class="hero-particle p1"></span>
+    <span class="hero-particle p2"></span>
+    <span class="hero-particle p3"></span>
+    <span class="hero-particle p4"></span>
+    <span class="hero-particle p5"></span>
+    <span class="hero-particle p6"></span>
+    <span class="hero-particle p7"></span>
+    <span class="hero-particle p8"></span>
+  </div>
+
+  <!-- Layer 3 & 4: Foreground Typography + 3D Pop-Out Courtroom Composition -->
+  <div class="container hero-stage">
+    <div class="hero-copy-col">
+      <div class="hero-brand-pill">
+        <span class="hero-live-pulse" aria-hidden="true"></span>
+        <span class="hero-brand-text">SATYA <b>·</b> INDIAN LEGAL INTELLIGENCE</span>
+        <span class="hero-code">FIELD NOTE / 001</span>
+      </div>
+
+      <h1 class="hero-main-title">Indian legal intelligence,<br><em>built to show its work.</em></h1>
+      <p class="hero-main-tagline">Explore the law through verified source material, inspectable passages, and citations that lead back to the page. When evidence runs thin, uncertainty belongs in the answer.</p>
+
+      <div class="hero-cta-row">
+        <a class="hero-btn-research" href="{{ url_for('pages.chatbot') }}">
+          <span>Start Legal Research</span>
+          <i class="bi bi-arrow-up-right"></i>
+        </a>
+        <a class="hero-btn-secondary" href="#how">
+          <span>Follow the evidence</span>
+          <i class="bi bi-arrow-down-right"></i>
+        </a>
+      </div>
+
+      <div class="hero-trust-strip">
+        <span class="hero-trust-meta"><i class="bi bi-patch-check"></i> VERIFIED MATERIAL</span>
+        <span class="hero-trust-meta"><i class="bi bi-signpost-split"></i> SECTION → PAGE</span>
+        <span class="hero-trust-meta"><i class="bi bi-eye"></i> UNCERTAINTY IN VIEW</span>
+      </div>
+    </div>
+
+    <div class="hero-visual-stage" aria-hidden="true">
+      <div class="hero-portal-ring ring-outer"></div>
+      <div class="hero-portal-ring ring-inner"></div>
+      <div class="hero-coordinate hero-coordinate-top"><span>TRACE / 01</span><i></i><span>INDIA · LAW</span></div>
+
+      <!-- Midground Golden Takadi (Scales of Justice) -->
+      <div class="hero-scales-layer">
+        <img src="{{ url_for('static', filename='images/takadi-scales.png') }}" alt="" class="hero-scales-img">
+      </div>
+
+      <!-- Foreground 3D Pop-Out AI Legal Intelligence Entity -->
+      <div class="hero-robot-layer">
+        <img src="{{ url_for('static', filename='images/ai-robot-head.png') }}" alt="" class="hero-robot-img">
+        <div class="hero-robot-floor-fade"></div>
+      </div>
+
+      <div class="hero-proof-tag proof-tag-source">
+        <span class="proof-tag-index">01</span>
+        <span><small>ORIGIN</small><b>Verified source</b></span>
+      </div>
+      <div class="hero-proof-tag proof-tag-locator">
+        <span class="proof-tag-index">02</span>
+        <span><small>LOCATOR</small><b>Section · Page · Passage</b></span>
+      </div>
+
+      <div class="hero-hud-card hud-left">
+        <i class="bi bi-file-earmark-check"></i>
+        <div>
+          <small>PROVENANCE CHAIN</small>
+          <b>Source → Section → Page</b>
+        </div>
+      </div>
+      <div class="hero-hud-card hud-right">
+        <span class="hud-dot"></span>
+        <div>
+          <small>RESEARCH PRINCIPLE</small>
+          <b>Evidence before explanation</b>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-bottom">
+    <span>01 — SOURCE / PASSAGE / CITATION</span>
+    <a href="#preview" class="hero-scroll-link">ENTER THE EVIDENCE TRACE <i class="bi bi-arrow-down"></i></a>
+  </div>
+</section>
+
+<section class="preview-showcase-section section-space" id="preview">
+  <div class="container evidence-trace-layout">
+    <div class="preview-showcase-copy">
+      <div class="section-label section-label-light"><span>00</span> THE EVIDENCE TRACE</div>
+      <h2>Legal intelligence.<br><em>Built on truth.</em></h2>
+      <p>A legal answer should leave a route back to its source. SATYA is designed around the trail: from a question, to a verified passage, to the section and page a reader can inspect.</p>
+      <div class="preview-showcase-actions">
+        <a class="button button-gold" href="{{ url_for('pages.register') }}">Create free workspace <i class="bi bi-arrow-up-right"></i></a>
+        <a class="button button-ghost" href="{{ url_for('pages.documents') }}">Browse source library <i class="bi bi-folder2-open"></i></a>
+      </div>
+    </div>
+
+    <div class="evidence-console" aria-label="Illustrative evidence trace, not a live answer">
+      <div class="console-topline">
+        <span class="console-brand"><span class="console-mark">S</span> SATYA / TRACE VIEW</span>
+        <span class="preview-label"><i class="bi bi-info-circle"></i> ILLUSTRATIVE PREVIEW</span>
+      </div>
+      <div class="console-query">
+        <span class="console-step">INPUT / 01</span>
+        <p>What would make a legal answer verifiable?</p>
+      </div>
+      <div class="console-flow" aria-hidden="true">
+        <div class="console-flow-line"><span></span><span></span><span></span></div>
+        <article class="source-fragment">
+          <span class="fragment-kicker">SOURCE / VERIFIED MATERIAL</span>
+          <strong>Original legal passage</strong>
+          <p>Relevant text stays attached to its source—not detached from context.</p>
+          <span class="fragment-mark">PASSAGE EXCERPT <i></i><i></i><i></i></span>
+        </article>
+        <div class="citation-stamp">
+          <span>LOCATOR / 02</span>
+          <b>Section <i class="bi bi-arrow-right"></i> Page</b>
+          <small>Document provenance</small>
+        </div>
+      </div>
+      <div class="console-verdict">
+        <span class="verdict-pulse"></span>
+        <span class="verdict-label">OUTPUT STANDARD</span>
+        <strong>Support the claim—or show the gap.</strong>
+      </div>
+      <div class="console-foot">
+        <span>SCHEMATIC ONLY · NO LIVE QUESTION OR RESULT</span>
+        <span class="confidence-unavailable"><i class="bi bi-dash-circle"></i> Not assessed</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="problem-section section-space" id="problem">
+  <div class="container">
+    <div class="section-intro">
+      <div class="section-label"><span>01</span> THE PROBLEM</div>
+      <h2>AI can sound authoritative.<br><em>That doesn't make it lawful.</em></h2>
+      <p>In legal research, fluency is not authority. A useful answer must let practitioners, researchers, and citizens inspect the record behind it.</p>
+    </div>
+    <div class="problem-grid">
+      <article class="problem-card">
+        <span class="problem-index">01 / ACCURACY</span>
+        <span class="problem-icon"><i class="bi bi-braces-asterisk"></i></span>
+        <h3>Fabricated or outdated sections</h3>
+        <p>A convincing section number can still be repealed, amended, or unrelated to the underlying legal issue.</p>
+        <span class="problem-rule"></span>
+      </article>
+      <article class="problem-card">
+        <span class="problem-index">02 / AUTHORITY</span>
+        <span class="problem-icon"><i class="bi bi-file-earmark-break"></i></span>
+        <h3>Invented rules &amp; blended acts</h3>
+        <p>Generic models often merge provisions across central and state laws or invent rules no source document supports.</p>
+        <span class="problem-rule"></span>
+      </article>
+      <article class="problem-card">
+        <span class="problem-index">03 / EVIDENCE</span>
+        <span class="problem-icon"><i class="bi bi-chat-square-quote"></i></span>
+        <h3>Unverifiable legal answers</h3>
+        <p>Plausible prose without page numbers, subsections, and inspectable excerpts is unacceptable in legal work.</p>
+        <span class="problem-rule"></span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="difference-section section-space" id="difference">
+  <div class="container">
+    <div class="difference-heading">
+      <div>
+        <div class="section-label"><span>02</span> THE SATYA DIFFERENCE</div>
+        <h2>Every claim must<br><em>earn your trust.</em></h2>
+      </div>
+      <p>Trust is a chain of custody. Keep the question, source passage, legal locator, and limits of an answer in the same field of view.</p>
+    </div>
+    <div class="difference-grid">
+      <article class="difference-item">
+        <span class="difference-icon"><i class="bi bi-journal-check"></i></span>
+        <div>
+          <h3>Verified material</h3>
+          <p>Retrieval is limited to records explicitly marked verified in the source database.</p>
+        </div>
+        <span class="difference-num">01</span>
+      </article>
+      <article class="difference-item">
+        <span class="difference-icon"><i class="bi bi-link-45deg"></i></span>
+        <div>
+          <h3>Traceable locators</h3>
+          <p>Document, section, paragraph, and page details keep a source passage inspectable.</p>
+        </div>
+        <span class="difference-num">02</span>
+      </article>
+      <article class="difference-item">
+        <span class="difference-icon"><i class="bi bi-eye"></i></span>
+        <div>
+          <h3>Visible uncertainty</h3>
+          <p>Evidence gaps, conflicts, and missing currentness should be visible—not covered by confident prose.</p>
+        </div>
+        <span class="difference-num">03</span>
+      </article>
+      <article class="difference-item">
+        <span class="difference-icon"><i class="bi bi-file-earmark-search"></i></span>
+        <div>
+          <h3>Context stays close</h3>
+          <p>Readers should be able to move from a claim to the passage and inspect its surrounding context.</p>
+        </div>
+        <span class="difference-num">04</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="workflow-section section-space" id="how">
+  <div class="container">
+    <div class="workflow-top">
+      <div>
+        <div class="section-label section-label-light"><span>03</span> HOW IT WORKS</div>
+        <h2>From question<br>to <em>verifiable evidence.</em></h2>
+      </div>
+      <p>A disciplined four-stage pipeline separating user queries, untrusted document excerpts, and verified legal citations.</p>
+    </div>
+    <ol class="workflow-path">
+      <li>
+        <details class="workflow-step" open>
+          <summary class="workflow-summary">
+            <span class="workflow-number">01 / INPUT</span>
+            <span class="workflow-icon"><i class="bi bi-chat-square-text"></i></span>
+            <span class="workflow-title"><b>Ask in plain language</b><small>Begin with the question.</small></span>
+            <i class="bi bi-plus-lg workflow-toggle" aria-hidden="true"></i>
+          </summary>
+          <div class="workflow-detail">
+            <p>Frame an Indian law or policy question naturally. The research trail starts with what needs to be established—not a guessed section number.</p>
+            <span>QUESTION → SEARCH INTENT</span>
+          </div>
+        </details>
+      </li>
+      <li>
+        <details class="workflow-step">
+          <summary class="workflow-summary">
+            <span class="workflow-number">02 / RETRIEVAL</span>
+            <span class="workflow-icon"><i class="bi bi-search"></i></span>
+            <span class="workflow-title"><b>Find verified records</b><small>Search the source set.</small></span>
+            <i class="bi bi-plus-lg workflow-toggle" aria-hidden="true"></i>
+          </summary>
+          <div class="workflow-detail">
+            <p>Search only records marked verified, then keep the retrieved passage tied to its source and check for conflicting versions.</p>
+            <span>SEARCH → VERIFIED PASSAGE</span>
+          </div>
+        </details>
+      </li>
+      <li>
+        <details class="workflow-step">
+          <summary class="workflow-summary">
+            <span class="workflow-number">03 / VALIDATION</span>
+            <span class="workflow-icon"><i class="bi bi-fingerprint"></i></span>
+            <span class="workflow-title"><b>Test the claim</b><small>Keep support in view.</small></span>
+            <i class="bi bi-plus-lg workflow-toggle" aria-hidden="true"></i>
+          </summary>
+          <div class="workflow-detail">
+            <p>Compare the response with retrieved text, including its numbers, negation, and legal references. A matching keyword alone is not the whole argument.</p>
+            <span>PASSAGE → CLAIM CHECK</span>
+          </div>
+        </details>
+      </li>
+      <li>
+        <details class="workflow-step">
+          <summary class="workflow-summary">
+            <span class="workflow-number">04 / PROVENANCE</span>
+            <span class="workflow-icon"><i class="bi bi-signpost-split"></i></span>
+            <span class="workflow-title"><b>Inspect—or stop</b><small>Follow the citation.</small></span>
+            <i class="bi bi-plus-lg workflow-toggle" aria-hidden="true"></i>
+          </summary>
+          <div class="workflow-detail">
+            <p>Trace the answer to its document, section, page, and excerpt. If the record cannot support the response, the gap should remain explicit.</p>
+            <span>CLAIM → SOURCE LOCATOR</span>
+          </div>
+        </details>
+      </li>
+    </ol>
+    <div class="workflow-foot">
+      <span><i class="bi bi-shield-lock"></i> Source material is evidence to inspect—not instructions to follow.</span>
+      <a href="{{ url_for('pages.about') }}">Read our governance brief <i class="bi bi-arrow-up-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<section class="domains-section section-space" id="domains">
+  <div class="container">
+    <div class="domains-heading">
+      <div>
+        <div class="section-label"><span>04</span> LEGAL DOMAINS</div>
+        <h2>Explore the areas<br>that <em>shape public life.</em></h2>
+      </div>
+      <a class="inline-link" href="{{ url_for('pages.knowledge_base') }}">Explore knowledge base <i class="bi bi-arrow-up-right"></i></a>
+    </div>
+    <div class="domain-grid">
+      {% set domains = [('bi-shield-check', 'Criminal Law', 'Careful access to criminal procedure and penal materials.'), ('bi-bag-check', 'Consumer Protection', 'Explore consumer rights and dispute resolution materials.'), ('bi-info-square', 'Right to Information', 'Find source-backed public disclosure frameworks.'), ('bi-people', 'Legal Aid', 'Explore statutory legal aid and access-to-justice resources.'), ('bi-lock', 'Digital Privacy and Data Protection', 'Explore privacy, data protection, and cyber governance.')] %}
+      {% for icon, title, description in domains %}
+      <a class="domain-card" href="{{ url_for('pages.knowledge_base') }}">
+        <span class="domain-icon"><i class="bi {{ icon }}"></i></span>
+        <span class="domain-name">{{ title }}</span>
+        <span class="domain-description">{{ description }}</span>
+        <span class="domain-status">OPEN DOMAIN INDEX <i class="bi bi-arrow-up-right"></i></span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="uncertainty-section">
+  <div class="container uncertainty-inner">
+    <div class="uncertainty-seal"><span><i class="bi bi-question-lg"></i></span><small>HONESTY<br>OVER HYPE</small></div>
+    <div class="uncertainty-copy">
+      <div class="section-label section-label-light"><span>05</span> TRUST &amp; TRANSPARENCY</div>
+      <h2>Evidence has a boundary.<br><em>An answer should too.</em></h2>
+      <p>Legal information is only as useful as its provenance. Missing, conflicting, or incomplete records should be made visible so a reader can decide what the evidence does—and does not—establish.</p>
+      <div class="uncertainty-points">
+        <span><i class="bi bi-check2"></i> Keep the source in view</span>
+        <span><i class="bi bi-check2"></i> Mark evidence gaps</span>
+        <span><i class="bi bi-check2"></i> Preserve legal context</span>
+      </div>
+    </div>
+    <div class="uncertainty-aside">
+      <span class="aside-kicker">THE EVIDENCE STANDARD</span>
+      <div class="status-orb"><i class="bi bi-shield-check"></i></div>
+      <b>Provenance before prose</b>
+      <p>A claim should travel with a verifiable source—or clearly show where the record runs out.</p>
+      <a href="{{ url_for('pages.documents') }}">View source library <i class="bi bi-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<section class="closing-section">
+  <div class="container closing-inner">
+    <div class="section-label"><span>06</span> THE NEXT STEP</div>
+    <h2>Bring the question.<br><em>Follow the evidence.</em></h2>
+    <p>Enter the SATYA research workspace for Indian law and policy.</p>
+    <a href="{{ url_for('pages.chatbot') }}" class="button button-gold">Start Legal Research <i class="bi bi-arrow-up-right"></i></a>
+    <span class="closing-note">SOURCE / PASSAGE / CITATION</span>
+  </div>
+</section>
+{% endblock %}

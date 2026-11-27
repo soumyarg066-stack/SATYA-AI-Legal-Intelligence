@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}Source Documents — SATYA{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <nav class="editorial-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ url_for('pages.home') }}">Home</a>
+      <i class="bi bi-chevron-right"></i>
+      <span>Source Library</span>
+    </nav>
+    <div class="editorial-badge"><i class="bi bi-folder2-open"></i> SOURCE LIBRARY</div>
+    <h1>Legal research library</h1>
+    <p>Upload source files for text extraction and evidence indexing. An administrator must review each extracted source before chat can use it.</p>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container">
+    {% if current_user.is_authenticated %}
+    <div class="documents-toolbar">
+      <div class="search-control">
+        <i class="bi bi-search"></i>
+        <label class="visually-hidden" for="documentSearch">Search documents</label>
+        <input id="documentSearch" type="search" class="form-control" placeholder="Search document names...">
+      </div>
+      <div class="d-flex gap-2">
+        <select id="documentStatusFilter" class="form-select" aria-label="Filter by processing status">
+          <option value="">All statuses</option>
+          <option value="uploaded">Uploaded</option>
+          <option value="pending">Pending</option>
+          <option value="processed">Processed</option>
+          <option value="failed">Failed</option>
+          <option value="unverified">Unverified</option>
+          <option value="verified">Verified</option>
+          <option value="rejected">Rejected</option>
+        </select>
+        {% if is_admin %}
+        <button class="btn btn-navy" data-bs-toggle="modal" data-bs-target="#uploadModal"><i class="bi bi-upload me-2"></i>Upload source</button>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="panel-card document-table-card">
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Document name</th>
+              <th>Type</th>
+              <th>Upload date</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="documentRows" data-can-verify="{{ 'true' if is_admin else 'false' }}">
+            <tr>
+              <td colspan="5"><div class="table-loading"><span class="spinner-border spinner-border-sm"></span> Loading source documents...</div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-foot">
+        <span id="documentCount">Loading documents</span>
+        <span><i class="bi bi-shield-check me-1"></i>Processing and verification status are shown per source</span>
+      </div>
+    </div>
+
+    <div class="upload-note">
+      <i class="bi bi-lock"></i>
+      <div>
+        <b>Responsible document handling</b>
+        <span>Only authorized administrators can upload files. Extraction preserves page numbers where available, but does not confirm legal accuracy or currentness.</span>
+        {% if not is_admin %}
+        <span>For this local instance, create or promote an administrator with <code>py -3 -m flask --app run.py create-admin</code>, then sign in again to upload and verify sources.</span>
+        {% endif %}
+      </div>
+    </div>
+    {% else %}
+    <div class="workspace-panel documents-signin">
+      <span class="auth-emblem"><i class="bi bi-person-lock"></i></span>
+      <h2>Sign in to browse source files</h2>
+      <p>The document list is available to signed-in SATYA users. Uploaded files are not automatically verified or processed.</p>
+      <a class="btn btn-navy" href="{{ url_for('pages.login', next=url_for('pages.documents')) }}">Sign in <i class="bi bi-arrow-right ms-2"></i></a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% if is_admin %}
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content upload-modal">
+      <div class="modal-header">
+        <div>
+          <div class="section-kicker">ADMIN DOCUMENT UPLOAD</div>
+          <h2 class="modal-title fs-5" id="uploadModalLabel">Add a legal source</h2>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="upload-drop">
+          <i class="bi bi-file-earmark-text"></i>
+          <b>Choose a file to extract and index</b>
+          <span>Maximum file size: 16 MB</span>
+        </div>
+        <label class="form-label mt-3" for="documentFile">Source file</label>
+        <input class="form-control" type="file" id="documentFile" accept=".pdf,.txt,.csv,.tsv,.xls">
+        <div id="uploadFeedback" class="form-text mt-2">Supported formats: PDF, TXT, CSV, TSV. Tab-separated CSV exports work as well. Extracted sources require administrator verification.</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-navy" id="uploadDocument"><i class="bi bi-upload me-2"></i>Upload source</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block scripts %}{% if current_user.is_authenticated %}<script src="{{ url_for('static', filename='js/documents.js', v='3') }}" defer></script>{% endif %}{% endblock %}

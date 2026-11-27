@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}Workspace — SATYA{% endblock %}
+{% block content %}
+<section class="workspace-hero">
+  <div class="container workspace-hero-inner">
+    <div>
+      <div class="section-label section-label-light"><span>YOUR WORKSPACE</span> / OVERVIEW</div>
+      <h1>Good to see you,<br><em>{{ current_user.username|e }}.</em></h1>
+      <p>Your executive workspace to explore Indian legal questions with care, context, and source transparency.</p>
+    </div>
+    <a class="workspace-profile-link" href="{{ url_for('pages.profile') }}">
+      <span class="avatar">{{ current_user.username[:1]|upper }}</span>
+      <span><b>Account settings</b><small>{{ current_user.email }}</small></span>
+      <i class="bi bi-arrow-up-right"></i>
+    </a>
+  </div>
+</section>
+
+<section class="dashboard-wrap">
+  <div class="container workspace-content">
+    {% if knowledge_status.available %}
+    <div class="workspace-status workspace-status-ready" id="dashboardRagStatus" role="status" aria-live="polite" data-rag-status="active">
+      <span class="workspace-status-icon"><i class="bi bi-check-circle-fill"></i></span>
+      <span>
+        <b>RAG Active <span class="rag-status-pill"><span class="rag-dot"></span> Knowledge base connected</span></b>
+        <small>{{ knowledge_status.verified_sources }} verified source{{ '' if knowledge_status.verified_sources == 1 else 's' }} ({{ knowledge_status.verified_chunks }} verified passage{{ '' if knowledge_status.verified_chunks == 1 else 's' }}) ready for evidence-grounded answers.</small>
+      </span>
+      <a href="{{ url_for('pages.documents') }}">View sources <i class="bi bi-arrow-right"></i></a>
+    </div>
+    {% else %}
+    <div class="workspace-status workspace-status-unavailable" id="dashboardRagStatus" role="status" aria-live="polite" data-rag-status="unavailable">
+      <span class="workspace-status-icon"><i class="bi bi-info-circle"></i></span>
+      <span>
+        <b>Knowledge base not connected</b>
+        <small>{{ document_count }} uploaded file{{ '' if document_count == 1 else 's' }} on record. Uploaded files have not been verified or processed.</small>
+      </span>
+      <a href="{{ url_for('pages.documents') }}">View sources <i class="bi bi-arrow-right"></i></a>
+    </div>
+    {% endif %}
+
+    <div class="workspace-search-card">
+      <div class="workspace-search-intro">
+        <span class="section-label section-label-light"><span>START WITH A QUESTION</span></span>
+        <h2>What would you like<br>to understand?</h2>
+        {% if knowledge_status.available %}
+        <p>Ask Satya — answers are retrieved from verified Indian legal documents with exact Rule, Section, and page citations.</p>
+        {% else %}
+        <p>Ask Satya — answers remain disabled until verified statutory or judicial evidence is connected.</p>
+        {% endif %}
+      </div>
+      <form class="workspace-search" action="{{ url_for('pages.chatbot') }}" method="get">
+        <label class="visually-hidden" for="dashboardQuestion">Your legal question</label>
+        <i class="bi bi-search"></i>
+        <input id="dashboardQuestion" name="q" type="search" maxlength="4000" placeholder="Ask a question about Indian law or policy...">
+        <button type="submit">Ask Satya <i class="bi bi-arrow-up-right"></i></button>
+      </form>
+      {% if knowledge_status.available %}
+      <div class="search-hint search-hint-ready"><span class="rag-dot"></span> RAG activated <span>·</span> {{ knowledge_status.verified_sources }} verified legal source{{ '' if knowledge_status.verified_sources == 1 else 's' }}</div>
+      {% else %}
+      <div class="search-hint"><i class="bi bi-shield-check"></i> Evidence-first by design <span>·</span> No verified documents yet</div>
+      {% endif %}
+    </div>
+
+    <div class="row g-4 workspace-lower">
+      <div class="col-lg-7">
+        <div class="workspace-panel">
+          <div class="workspace-panel-heading">
+            <div><span class="section-label"><span>YOUR RESEARCH</span></span><h2>Recent conversations</h2></div>
+            <a href="{{ url_for('pages.chatbot') }}">View all <i class="bi bi-arrow-up-right"></i></a>
+          </div>
+          {% if conversations %}
+          <div class="activity-list">
+            {% for conversation in conversations %}
+            <a class="activity-item" href="{{ url_for('pages.chatbot', conversation=conversation.id) }}">
+              <span class="activity-icon"><i class="bi bi-chat-left-text"></i></span>
+              <span class="activity-title">{{ conversation.title }}</span>
+              <span class="activity-date">{{ conversation.created_at.strftime('%b %d, %Y') }}</span>
+              <i class="bi bi-chevron-right"></i>
+            </a>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="workspace-empty">
+            <span class="empty-icon"><i class="bi bi-chat-square-dots"></i></span>
+            <h3>No conversations yet</h3>
+            <p>Your research history will appear here after your first question.</p>
+            <a href="{{ url_for('pages.chatbot') }}">Open Ask Satya <i class="bi bi-arrow-right"></i></a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="workspace-panel domain-shortcuts">
+          <div class="workspace-panel-heading">
+            <div><span class="section-label"><span>EXPLORE BY SUBJECT</span></span><h2>Legal domains</h2></div>
+            <a href="{{ url_for('pages.knowledge_base') }}">All topics <i class="bi bi-arrow-up-right"></i></a>
+          </div>
+          <div class="quick-link-list">
+            <a href="{{ url_for('pages.knowledge_base') }}"><i class="bi bi-shield-check"></i><span>Criminal Law</span><i class="bi bi-arrow-up-right ms-auto"></i></a>
+            <a href="{{ url_for('pages.knowledge_base') }}"><i class="bi bi-bag-check"></i><span>Consumer Protection</span><i class="bi bi-arrow-up-right ms-auto"></i></a>
+            <a href="{{ url_for('pages.knowledge_base') }}"><i class="bi bi-info-square"></i><span>Right to Information</span><i class="bi bi-arrow-up-right ms-auto"></i></a>
+            <a href="{{ url_for('pages.knowledge_base') }}"><i class="bi bi-people"></i><span>Legal Aid</span><i class="bi bi-arrow-up-right ms-auto"></i></a>
+            <a href="{{ url_for('pages.knowledge_base') }}"><i class="bi bi-lock"></i><span>Digital Privacy &amp; Data Protection</span><i class="bi bi-arrow-up-right ms-auto"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="workspace-quick-actions">
+      <span>QUICK ACCESS</span>
+      <a href="{{ url_for('pages.chatbot') }}"><i class="bi bi-chat-square-text"></i> Ask Satya</a>
+      <a href="{{ url_for('pages.knowledge_base') }}"><i class="bi bi-journal-bookmark"></i> Knowledge base</a>
+      <a href="{{ url_for('pages.documents') }}"><i class="bi bi-folder2-open"></i> Source library</a>
+      <a href="{{ url_for('pages.about') }}"><i class="bi bi-shield-check"></i> How we work</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Create account — SATYA{% endblock %}
+{% block content %}
+<section class="auth-section">
+  <div class="container">
+    <div class="auth-layout">
+      <div class="auth-story">
+        <a class="auth-brand" href="{{ url_for('pages.home') }}"><span class="brand-mark">S</span><span>SATYA<small>TRUTH IN EVERY LEGAL ANSWER</small></span></a>
+        <div class="section-label section-label-light"><span>INDIAN LAW. VERIFIED EVIDENCE.</span></div>
+        <h1>Legal intelligence<br><em>built on truth.</em></h1>
+        <p>Create your workspace to explore an evidence-first approach to Indian legal and policy research.</p>
+        <div class="auth-story-note"><i class="bi bi-info-circle"></i><span>The source library is not connected yet. Satya will not invent answers or citations.</span></div>
+      </div>
+      <div class="auth-card">
+        <div class="auth-emblem"><i class="bi bi-person-plus"></i></div>
+        <div class="section-kicker">GET STARTED</div>
+        <h2>Create your account</h2>
+        <p class="auth-subtitle">Set up your personal workspace in a moment.</p>
+        <form method="post" novalidate>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <div class="mb-3"><label class="form-label" for="username">Your name</label><input class="form-control" id="username" name="username" autocomplete="name" required minlength="2" maxlength="80" value="{{ request.form.get('username', '') }}"></div>
+          <div class="mb-3"><label class="form-label" for="email">Email address</label><input class="form-control" id="email" name="email" type="email" autocomplete="email" required maxlength="254" value="{{ request.form.get('email', '') }}"></div>
+          <div class="mb-3"><label class="form-label" for="password">Password</label><input class="form-control" id="password" name="password" type="password" autocomplete="new-password" required minlength="10"><div class="form-text">Use at least 10 characters.</div></div>
+          <div class="mb-4"><label class="form-label" for="confirm_password">Confirm password</label><input class="form-control" id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" required minlength="10"></div>
+          <button class="btn btn-navy w-100 btn-lg" type="submit">Create account <i class="bi bi-arrow-right ms-2"></i></button>
+        </form>
+        <p class="auth-switch">Already registered? <a href="{{ url_for('pages.login') }}">Sign in</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

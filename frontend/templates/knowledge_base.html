@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Legal Knowledge Base — SATYA{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <nav class="editorial-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ url_for('pages.home') }}">Home</a>
+      <i class="bi bi-chevron-right"></i>
+      <span>Knowledge Base</span>
+    </nav>
+    <div class="editorial-badge"><i class="bi bi-journal-bookmark"></i> STATUTORY &amp; POLICY INDEX</div>
+    <h1>Legal knowledge base</h1>
+    <p>A structured, verification-first index for exploring uploaded Indian law and public policy sources.</p>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container">
+    <div class="dataset-notice">
+      <i class="bi bi-info-circle-fill"></i>
+      <div>
+        {% if knowledge_status.available %}
+        <strong>{{ knowledge_status.verified_sources }} verified legal source{% if knowledge_status.verified_sources != 1 %}s{% endif %} available.</strong>
+        <span>{{ knowledge_status.verified_chunks }} verified passages are indexed for evidence retrieval. Uploaded content is not treated as verified until an administrator reviews it.</span>
+        {% else %}
+        <strong>No verified legal documents are available yet.</strong>
+        <span>{{ knowledge_status.pending_sources }} uploaded source{% if knowledge_status.pending_sources != 1 %}s are{% else %} is{% endif %} awaiting administrator review. Unverified content is excluded from chat answers.</span>
+        {% endif %}
+      </div>
+      <a href="{{ url_for('pages.documents') }}">Source documents <i class="bi bi-arrow-right ms-1"></i></a>
+    </div>
+
+    <div class="knowledge-toolbar">
+      <div class="knowledge-search search-control">
+        <i class="bi bi-search"></i>
+        <label class="visually-hidden" for="knowledgeSearch">Search legal domains</label>
+        <input id="knowledgeSearch" type="search" class="form-control" placeholder="Search legal domains...">
+      </div>
+      <div class="knowledge-filters" role="group" aria-label="Filter legal domains">
+        <button class="knowledge-filter active" type="button" data-filter="all" aria-pressed="true">All topics</button>
+        <button class="knowledge-filter" type="button" data-filter="criminal-law" aria-pressed="false">Criminal Law</button>
+        <button class="knowledge-filter" type="button" data-filter="consumer-protection" aria-pressed="false">Consumer Protection</button>
+        <button class="knowledge-filter" type="button" data-filter="right-to-information" aria-pressed="false">Right to Information</button>
+        <button class="knowledge-filter" type="button" data-filter="legal-aid" aria-pressed="false">Legal Aid</button>
+        <button class="knowledge-filter" type="button" data-filter="digital-privacy" aria-pressed="false">Digital Privacy</button>
+      </div>
+    </div>
+
+    <div class="row g-3 mt-2" id="knowledgeCards">
+      {% set categories = [('bi-shield', 'Criminal Law', 'Explore material related to criminal procedure, penal provisions, and safeguards.', 'criminal-law'), ('bi-bag-check', 'Consumer Protection', 'Explore material related to consumer rights, redressal forums, and product liability.', 'consumer-protection'), ('bi-info-square', 'Right to Information', 'Explore material related to public authority disclosure obligations and appeals.', 'right-to-information'), ('bi-people', 'Legal Aid', 'Explore material related to statutory legal aid eligibility and services.', 'legal-aid'), ('bi-lock', 'Digital Privacy and Data Protection', 'Explore material related to digital privacy, intermediaries, and data governance.', 'digital-privacy')] %}
+      {% for icon, title, description, slug in categories %}
+      <div class="col-md-6 col-lg-4 knowledge-result" data-domain="{{ slug }}">
+        <article class="knowledge-card">
+          <div class="knowledge-card-top">
+            <div class="knowledge-card-icon"><i class="bi {{ icon }}"></i></div>
+            <span class="knowledge-count">SOURCE TOPIC</span>
+          </div>
+          <h2>{{ title }}</h2>
+          <p>{{ description }}</p>
+          <div class="knowledge-card-bottom">
+            <span>Review indexed sources</span>
+            <i class="bi bi-arrow-up-right"></i>
+          </div>
+        </article>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="knowledge-no-results" id="knowledgeNoResults" hidden>
+      <i class="bi bi-search"></i>
+      <span>No legal domains match this search.</span>
+    </div>
+
+    {% if verified_sources %}
+    <div class="panel-card mt-4 p-4">
+      <div class="section-kicker">VERIFIED SOURCE MATERIAL</div>
+      <div class="list-group list-group-flush">
+        {% for source in verified_sources %}
+        <div class="list-group-item px-0">
+          <strong>{{ source.title }}</strong>
+          {% if source.domain %}<span class="ms-2 text-muted">{{ source.domain }}</span>{% endif %}
+          <div class="small text-muted">{{ source.chunks|length }} verified passage{% if source.chunks|length != 1 %}s{% endif %}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% else %}
+    <div class="empty-state knowledge-empty">
+      <span class="empty-icon"><i class="bi bi-journal-bookmark"></i></span>
+      <h3>Your source-backed library starts here</h3>
+      <p>Verified sources appear here after an administrator reviews the extracted text. Page references are retained where available.</p>
+      <a class="btn btn-outline-navy" href="{{ url_for('pages.documents') }}">Browse source documents</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/knowledge.js', v='3') }}" defer></script>{% endblock %}

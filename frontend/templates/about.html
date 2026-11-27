@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}About SATYA — Governance &amp; Architecture{% endblock %}
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <nav class="editorial-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ url_for('pages.home') }}">Home</a>
+      <i class="bi bi-chevron-right"></i>
+      <span>About SATYA</span>
+    </nav>
+    <div class="editorial-badge"><i class="bi bi-shield-check"></i> LEGAL AI GOVERNANCE</div>
+    <h1>Legal AI with<br><span class="text-gold">integrity at its core.</span></h1>
+    <p>SATYA is engineered to make Indian legal and policy information exploreable with a strict boundary between verified evidence and generated explanation.</p>
+    <div class="editorial-meta-row">
+      <span><i class="bi bi-person-badge"></i> SATYA Architecture &amp; Safeguards</span>
+      <span><i class="bi bi-database-check"></i> Verification-First Standard</span>
+      <span><i class="bi bi-lock"></i> Zero Fabrication Policy</span>
+    </div>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container">
+    <div class="editorial-layout">
+      <aside class="editorial-toc" aria-label="Page sections">
+        <div class="toc-card">
+          <div class="section-kicker">ON THIS PAGE</div>
+          <nav class="toc-links">
+            <a href="#why-satya"><span>01</span> Why SATYA exists</a>
+            <a href="#core-principles"><span>02</span> Core principles</a>
+            <a href="#safeguard-matrix"><span>03</span> Safeguard matrix</a>
+            <a href="#legal-notice"><span>04</span> Important notice</a>
+          </nav>
+          <div class="toc-status">
+            <span class="toc-status-dot"></span>
+            <small>No verified legal dataset is loaded yet. Chatbot answers remain strictly abstaining until verified records are added.</small>
+          </div>
+          <a class="toc-cta" href="{{ url_for('pages.documents') }}">Inspect source library <i class="bi bi-arrow-up-right"></i></a>
+        </div>
+      </aside>
+
+      <article class="editorial-article">
+        <section id="why-satya" class="editorial-block">
+          <div class="section-kicker">01 / WHY SATYA EXISTS</div>
+          <h2 class="content-title">Confidence isn't the same as correctness.</h2>
+          <p class="body-copy editorial-dropcap">General-purpose AI systems routinely produce fluent, authoritative-sounding legal summaries that misquote statutory sections, overlook amendments, or invent non-existent rules. In Indian legal research, a plausible falsehood is worse than no answer at all.</p>
+          <p class="body-copy">SATYA is designed as an evidence-grounded architecture: retrieved source material is treated strictly as untrusted data rather than executable instructions, claims must link back to verified database records, and missing or conflicting evidence triggers an explicit abstention.</p>
+          <blockquote class="editorial-quote">
+            “AI must support human legal reasoning through traceable provenance—never replace official statutes, notifications, or qualified legal judgment.”
+          </blockquote>
+        </section>
+
+        <section id="core-principles" class="editorial-block">
+          <div class="section-kicker">02 / DESIGN PRINCIPLES</div>
+          <h2 class="content-title">Built around four non-negotiable standards.</h2>
+          <div class="principle-grid">
+            <div class="principle-tile">
+              <span class="principle-tile-icon"><i class="bi bi-journal-check"></i></span>
+              <div>
+                <h3>Evidence-led</h3>
+                <p>Every factual statement must cite an explicitly verified source record in the database.</p>
+              </div>
+            </div>
+            <div class="principle-tile">
+              <span class="principle-tile-icon"><i class="bi bi-eye"></i></span>
+              <div>
+                <h3>Inspectable</h3>
+                <p>Document titles, sections, page numbers, and verbatim excerpts remain visible side-by-side.</p>
+              </div>
+            </div>
+            <div class="principle-tile">
+              <span class="principle-tile-icon"><i class="bi bi-question-circle"></i></span>
+              <div>
+                <h3>Honest about uncertainty</h3>
+                <p>Missing records, conflicting passages, or unverified currentness are disclosed plainly.</p>
+              </div>
+            </div>
+            <div class="principle-tile">
+              <span class="principle-tile-icon"><i class="bi bi-shield-lock"></i></span>
+              <div>
+                <h3>Injection-resistant</h3>
+                <p>Quoted legal text and conversation history are isolated from system instructions.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="safeguard-matrix" class="editorial-block">
+          <div class="section-kicker">03 / VERIFICATION ARCHITECTURE</div>
+          <h2 class="content-title">How SATYA handles legal edge cases.</h2>
+          <div class="panel-card editorial-table-card">
+            <div class="table-responsive">
+              <table class="table editorial-table mb-0">
+                <thead>
+                  <tr>
+                    <th>Scenario</th>
+                    <th>Implemented Safeguard</th>
+                    <th>Outcome</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Unverified uploads</strong></td>
+                    <td>Retrieval queries filter strictly on <code>verification_status = 'verified'</code>.</td>
+                    <td>Excluded until verified</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Conflicting provisions</strong></td>
+                    <td>Detects differing text across documents for the same Act/section.</td>
+                    <td>Abstains &amp; surfaces sources</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Currentness queries</strong></td>
+                    <td>Checks commencement date and amendment metadata before answering.</td>
+                    <td>Abstains if unverified</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Unsupported claims</strong></td>
+                    <td>Screens lexical overlap, numeric values, and negation polarity per claim.</td>
+                    <td>Withholds unsupported output</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="legal-notice" class="editorial-block">
+          <div class="disclaimer-card">
+            <i class="bi bi-exclamation-circle"></i>
+            <div>
+              <b>Important notice</b>
+              <p>SATYA is intended to support access to legal information, not to provide personalized legal advice or replace a qualified legal professional. Always consult official gazette publications, court records, and professional counsel for your specific circumstances.</p>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
+</section>
+{% endblock %}

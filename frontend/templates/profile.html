@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Your profile — SATYA{% endblock %}
+{% block content %}
+<section class="page-hero compact-hero">
+  <div class="container">
+    <nav class="editorial-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ url_for('pages.dashboard') }}">Workspace</a>
+      <i class="bi bi-chevron-right"></i>
+      <span>Profile</span>
+    </nav>
+    <div class="editorial-badge"><i class="bi bi-person-gear"></i> ACCOUNT SETTINGS</div>
+    <h1>Your profile</h1>
+    <p>Manage your display name, email address, and account preferences.</p>
+  </div>
+</section>
+<section class="content-section">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="profile-summary panel-card">
+          <span class="profile-avatar">{{ current_user.username[:1]|upper }}</span>
+          <h2>{{ current_user.username }}</h2>
+          <p>{{ current_user.email }}</p>
+          <span class="role-badge">{{ current_user.role|title }}</span>
+          <div class="profile-meta"><i class="bi bi-calendar3"></i> Member since {{ current_user.created_at.strftime('%B %Y') }}</div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="panel-card profile-edit-card">
+          <div class="section-kicker">PERSONAL INFORMATION</div>
+          <h2>Account details</h2>
+          <form method="post" class="mt-4">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="mb-3">
+              <label class="form-label" for="username">Display name</label>
+              <input class="form-control" id="username" name="username" required minlength="2" maxlength="80" value="{{ request.form.get('username', current_user.username) }}">
+            </div>
+            <div class="mb-4">
+              <label class="form-label" for="email">Email address</label>
+              <input class="form-control" id="email" name="email" type="email" required maxlength="254" value="{{ request.form.get('email', current_user.email) }}">
+            </div>
+            <button class="btn btn-navy" type="submit">Save changes <i class="bi bi-check2 ms-2"></i></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
